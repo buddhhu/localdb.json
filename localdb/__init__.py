@@ -97,7 +97,7 @@ class AsyncDatabase(Database):
             self.name += "database.json"
         elif not self.name.endswith(".json"):
             self.name += ".json"
-        super().__init__(database_name=database_name)
+        asyncio.get_event_loop().run_until_complete(self._data())
 
     @run_async
     def _raw_data(self):
