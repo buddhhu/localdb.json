@@ -100,6 +100,14 @@ class AsyncDatabase(Database):
         super().__init__(database_name=database_name)
 
     @run_async
+    def _raw_data(self):
+        return super()._raw_data()
+
+    @run_async
+    def _data(self):
+        return super()._data()
+
+    @run_async
     def get(self, key):
         return super().get(key)
 
