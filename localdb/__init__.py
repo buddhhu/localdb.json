@@ -1,7 +1,7 @@
 # © Amit Sharma <https://github.com/buddhhu>
 
 from os.path import getsize
-import asyncio, asyncio
+import asyncio, inspect
 import multiprocessing
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
