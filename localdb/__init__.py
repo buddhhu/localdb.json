@@ -106,7 +106,7 @@ class AsyncDatabase(Database):
                 return data.read()
         except FileNotFoundError:
             self._create_database(self.name)
-        return self.async_raw_data()
+        return asyncio.get_event_loop().run_until_complete(self.async_raw_data())
 
     async def async_data(self):
         self._cache = eval(await self.async_raw_data())
