@@ -1,7 +1,7 @@
 # © Amit Sharma <https://github.com/buddhhu>
 
 from os.path import getsize
-import asyncio, inspect
+import asyncio
 import multiprocessing
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
@@ -40,9 +40,6 @@ class Database:
 
     def _data(self):
         """Converts raw data into dict"""
-        if inspect.isawaitable(self._raw_data()):
-            self._cache = eval(asyncio.get_event_loop().run_until_complete(self._raw_data()))
-            return
         self._cache = eval(self._raw_data())
 
     def get(self, key):
@@ -100,15 +97,19 @@ class AsyncDatabase(Database):
             self.name += "database.json"
         elif not self.name.endswith(".json"):
             self.name += ".json"
-        asyncio.get_event_loop().run_until_complete(self._data())
+        asyncio.get_event_loop().run_until_complete(self.async_data())
 
     @run_async
-    def _raw_data(self):
-        return super()._raw_data()
+    def async_raw_data(self):
+        try:
+            with open(self.name, "r") as data:
+                return data.read()
+        except FileNotFoundError:
+            self._create_database(self.name)
+        return self.async_raw_data()
 
-    @run_async
-    def _data(self):
-        return super()._data()
+    async def async_data(self):
+        self._cache = eval(await self.async_raw_data())
 
     @run_async
     def get(self, key):
