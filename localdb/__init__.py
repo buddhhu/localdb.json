@@ -40,6 +40,9 @@ class Database:
 
     def _data(self):
         """Converts raw data into dict"""
+        if inspect.isawaitable(self._raw_data()):
+            self._cache = eval(asyncio.get_event_loop().run_until_complete(self._raw_data()))
+            return
         self._cache = eval(self._raw_data())
 
     def get(self, key):
