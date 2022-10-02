@@ -1,5 +1,5 @@
 ## [localdb.json](https://github.com/buddhhu/localdb.json)
-**A helper script for easily handling of JSON file as database in local storage.**
+**A helper script for easy handling of JSON file as database in local storage.**
 
 ---
 ### Installation
