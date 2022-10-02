@@ -57,7 +57,7 @@ db.size
 
 ---
 ### Issues ?
-Open issues or ask [here](t.me/botsrealm)
+Open issues or ask [here](https://t.me/botsrealm)
 
 ### Contributing
 Pull requests are welcome.
