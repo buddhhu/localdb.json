@@ -44,8 +44,6 @@ class Database:
                 pass
         if key and value:
             data.update({key: value})
-        if not key and not value:
-            return
         with open(self.name, "w") as dbfile:
             dbfile.write(str(data))
         self._data()
