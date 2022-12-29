@@ -1,5 +1,6 @@
 # © Amit Sharma <https://github.com/buddhhu>
 
+import json
 from os.path import getsize
 
 __version__ = "1.0"
@@ -20,7 +21,7 @@ class Database:
         """Returns raw data from database file"""
         try:
             with open(self.name, "r") as data:
-                return data.read()
+                return json.load(data)
         except FileNotFoundError:
             self._create_database(self.name)
         return self._raw_data()
@@ -45,7 +46,7 @@ class Database:
         if key and value:
             data.update({key: value})
         with open(self.name, "w") as dbfile:
-            dbfile.write(str(data))
+            json.dump(data, dbfile)
         self._data()
         return True
 
