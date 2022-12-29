@@ -1,5 +1,6 @@
 # © Amit Sharma <https://github.com/buddhhu>
 
+import json
 from os.path import getsize
 
 __version__ = "1.0"
@@ -20,14 +21,21 @@ class Database:
         """Returns raw data from database file"""
         try:
             with open(self.name, "r") as data:
-                return data.read()
+                try:
+                    return json.load(data)
+                except Exception as er:
+                    return data.read()
         except FileNotFoundError:
             self._create_database(self.name)
         return self._raw_data()
 
     def _data(self):
         """Converts raw data into dict"""
-        self._cache = eval(self._raw_data())
+        data = self._raw_data()
+        if isinstance(data, str):
+            self._cache = eval(self._raw_data())
+        else:
+            self._cache = data
 
     def get(self, key):
         """Get the requested key, uses cache before reading database file."""
@@ -45,7 +53,7 @@ class Database:
         if key and value:
             data.update({key: value})
         with open(self.name, "w") as dbfile:
-            dbfile.write(str(data))
+            json.dump(data, dbfile)
         self._data()
         return True
 
