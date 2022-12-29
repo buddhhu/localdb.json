@@ -21,14 +21,21 @@ class Database:
         """Returns raw data from database file"""
         try:
             with open(self.name, "r") as data:
-                return json.load(data)
+                try:
+                    return json.load(data)
+                except Exception as er:
+                    return data.read()
         except FileNotFoundError:
             self._create_database(self.name)
         return self._raw_data()
 
     def _data(self):
         """Converts raw data into dict"""
-        self._cache = eval(self._raw_data())
+        data = self._raw_data()
+        if isinstance(data, str):
+            self._cache = eval(self._raw_data())
+        else:
+            self._cache = data
 
     def get(self, key):
         """Get the requested key, uses cache before reading database file."""
