@@ -32,10 +32,7 @@ class Database:
     def _data(self):
         """Converts raw data into dict"""
         data = self._raw_data()
-        if isinstance(data, str):
-            self._cache = eval(self._raw_data())
-        else:
-            self._cache = data
+        self._cache = eval(self._raw_data()) if isinstance(data, str) else data
 
     def get(self, key):
         """Get the requested key, uses cache before reading database file."""
