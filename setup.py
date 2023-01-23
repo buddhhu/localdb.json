@@ -3,7 +3,7 @@ import re
 import setuptools
 
 with open("localdb/__init__.py", "rt", encoding="utf8") as x:
-    version = re.search(r'__version__ = "(.*?)"', x.read()).group(1)
+    version = re.search(r'__version__ = "(.*?)"', x.read())[1]
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
